@@ -1,0 +1,61 @@
+i {
+  font-size: 50pt;
+  margin: 22px 0px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  height: 85vh;
+}
+
+li {
+  display: inline-block;
+  text-align: center;
+  padding: 14px 10px;
+  width: 200px;
+  text-decoration: none;
+}
+
+.crop {
+  margin:5px 0px 10px 0px;
+}
+
+.card {
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.card-title {
+  font-weight: 300;
+}
+
+.audio, .recording, .youtube {
+  /*background: #496ff9;*/
+  color:whitesmoke;
+}
+
+.audio {
+  background: #337ab7;
+}
+
+.recording {
+  background: #f0ad4e;
+}
+
+.youtube {
+  background: #d9534f;
+}
+
+.bookmark, .edit, .trash {
+  font-size: 16pt;
+  margin-right: 30px;
+  margin-bottom: 5px;
+}
+
+.trash {
+  margin-right: 0px;
+}

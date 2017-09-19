@@ -1,0 +1,101 @@
+<div class="container" id="homePage">
+  <div id="topMenu">
+    <button id="newFileButton" class="btn btn-primary" (click)="open(insertFileModal)">
+      <i class="fa fa-music"></i>
+      New File
+    </button>
+    <button id="newRecButton" class="btn btn-warning" (click)="open(insertRecordingModal)">
+      <i class="fa fa-microphone"></i>
+      New Recording
+    </button>
+    <button id="newYTButton" class="btn btn-danger" (click)="open(insertYoutubeModal)">
+      <i class="fa fa-youtube"></i>
+      New YouTube
+    </button>
+  </div>
+  <div id="menu" class="pull-left">
+    <ul id="menuItems" class="list-unstyled text-left">
+      <li class="selected"><i class="fa fa-home"></i> Home</li>
+      <li><i class="fa fa-music"></i> Files</li>
+      <li><i class="fa fa-microphone"></i> Recordings</li>
+      <li><i class="fa fa-youtube"></i> YouTube</li>
+      <li><i class="fa fa-star-o"></i> Favorites</li>
+    </ul>
+  </div>
+  <app-files-list></app-files-list>
+
+  <ng-template #insertFileModal>
+    <div class="modal-header">
+      <h3 class="modal-title">Insert New File</h3>
+    </div>
+    <div class="modal-body">
+      <div>
+        <input id="fileUpload" (change)="inputName()" class="form" type="file" accept="audio/mp3">
+        <br>
+        <label id="errorNoFile" class="text-danger">Select a file</label>
+        <br>
+        <h4>Name of file <span class="text-danger">*</span></h4>
+        <label id="errorUploadFile" class="text-danger">Enter name of file</label>
+        <label id="errorDuplicateFile" class="text-danger">File with this name already exists</label>
+        <input id="fileName" class="form-control" placeholder="Name of file" type="text">
+        <div class="progress">
+          <div id="uploaderProgress" class="progress-bar progress-bar-striped active" role="progressbar"
+               aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%; height: 20px;">
+            <p id="percentageDone" class="text-center">0%</p>
+          </div>
+        </div>
+        <br>
+        <button id="closeButton" class="btn btn-danger pull-right" (click)="closeModal()">Close</button>
+        <button id="uploadButton" class="btn btn-success pull-right" (click)="upload()">Upload</button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #insertRecordingModal>
+    <div class="modal-header">
+      <h4 class="modal-title">Insert New Recording</h4>
+    </div>
+    <div class="modal-body">
+      <div>
+        <input>
+        <button class="btn btn-success">Upload</button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #insertYoutubeModal>
+    <div class="modal-header">
+      <h4 class="modal-title">Insert New YouTube</h4>
+    </div>
+    <div class="modal-body">
+      <div>
+        <input>
+        <button class="btn btn-success">Upload</button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #deleteFileModal>
+    <div class="modal-header">
+      <h4 class="modal-title">Delete File</h4>
+    </div>
+    <div class="modal-body">
+      <div>
+        <input>
+        <button class="btn btn-success">Upload</button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #editFileModal>
+    <div class="modal-header">
+      <h4 class="modal-title">Edit File</h4>
+    </div>
+    <div class="modal-body">
+      <div>
+        <input>
+        <button class="btn btn-success">Upload</button>
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,44 @@
+#signupPage {
+  width:100%;
+  min-height: 100vh;
+  background: linear-gradient(140deg, #6bd8e2 0%, #67e5cb 51%, #51d1c0 75%);
+}
+
+#form {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width:400px;
+  background: linear-gradient(0deg, #5ab6bb 0%, #5bb8c0 51%, #56abbb 75%);
+  padding: 45px 50px 30px 50px;
+  border-radius: 10px;
+}
+
+#signupButton {
+  width: 100%;
+  font-weight: 300;
+  font-size: 13pt;
+  margin-top: 15px;
+}
+
+input {
+  font-size:12pt;
+  height: 30pt;
+  font-weight: 300;
+}
+
+#info {
+  width: 100%;
+  text-align: center;
+  margin-bottom:25px;
+  font-size:18pt;
+  color:white;
+  font-weight: 400;
+}
+
+label {
+  color: white;
+  font-weight: 500;
+}

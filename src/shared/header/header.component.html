@@ -1,0 +1,13 @@
+<div id="header" class="container pull-left">
+  <h2 id="title">Audio Note</h2>
+  <label *ngIf="page.location.href.includes('login')" routerLink="signup" id="signUpButton" class="pull-right">
+    <i class="fa fa-user-plus"></i> Sign Up
+  </label>
+  <label *ngIf="page.location.href.includes('signup')" routerLink="login" id="loginButton" class="pull-right">
+    <i class="fa fa-user-circle"></i>  Log in
+  </label>
+  <label *ngIf="!(page.location.href.includes('login') || page.location.href.includes('signup'))" (click)="logout()" id="logOutButton" class="pull-right">
+    <i class="fa fa-sign-out"></i> Log Out
+  </label>
+  <label *ngIf="!(page.location.href.includes('login') || page.location.href.includes('signup'))" id="userName" class="text-center pull-right"></label>
+</div>

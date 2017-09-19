@@ -1,0 +1,39 @@
+#header {
+  /*background: darkcyan;*/
+  background: #59b3bb;
+  width:100%;
+}
+
+#title {
+  color: whitesmoke;
+  margin-top: 10px;
+  display: inline-block;
+  font-weight: 300;
+}
+
+#loginButton, #signUpButton, #logOutButton {
+  margin-left: 10px;
+  margin-top: 10px;
+  padding:4px;
+  color:whitesmoke;
+  font-size: 12pt;
+  font-weight: 300;
+  border-color: lavender;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+}
+
+#loginButton:hover, #signUpButton:hover, #logOutButton:hover{
+  color: darkcyan;
+  background: white;
+  cursor: pointer;
+}
+
+#userName {
+  color: whitesmoke;
+  font-weight: 200;
+  font-size: 14pt;
+  margin-top: 17px;
+  margin-right: 15px;
+}

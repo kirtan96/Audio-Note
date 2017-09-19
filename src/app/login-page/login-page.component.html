@@ -1,0 +1,33 @@
+<div id="loginPage" class="container">
+  <div id="form" class="container">
+    <form class="form-horizontal">
+      <label *ngIf="!reset" class="info">Log In to Your Account</label>
+      <label *ngIf="reset" class="info">Send Recovery Email</label>
+      <div class="form-group">
+        <label for="email"><i class="fa fa-envelope-o"></i> Email Address</label>
+        <p *ngIf="invalidAuth" class="text-danger">Invalid Email or Password</p>
+        <p *ngIf="invalidEmail" class="text-danger">Invalid Email</p>
+        <p *ngIf="emptyEmail" class="text-danger">Enter Email</p>
+        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+      </div>
+      <div *ngIf="!reset" class="form-group">
+        <label for="pwd"><i class="fa fa-key"></i> Password</label>
+        <p *ngIf="emptyPwd" class="text-danger">Enter Password</p>
+        <input type="password" class="form-control" placeholder="Enter password" id="pwd">
+      </div>
+      <div *ngIf="reset && error" class="alert alert-danger">
+        <strong>Error!</strong> Account with this email does not exist
+      </div>
+      <div *ngIf="reset && success" class="alert alert-success">
+        <strong>Email Sent!</strong> Check your email to reset your password
+      </div>
+      <a *ngIf="!reset" id="forgotPwd" (click)="resetPwd()" class="text-primary text-left">Forgot password?</a>
+      <button *ngIf="!reset" (click)="login()" id="loginButton" class="btn btn-primary pull-right"> Log In
+        <i class="fa fa-arrow-circle-right"></i></button>
+      <button *ngIf="reset" (click)="sendRecoveryEmail()" id="sendButton" class="btn btn-primary pull-right">
+        <i class="fa fa-send-o"></i> Send Email</button>
+      <button *ngIf="reset" (click)="cancelReset()" id="cancelButton" class="btn btn-danger pull-right">
+        <i class="fa fa-arrow-circle-left"></i> Back</button>
+    </form>
+  </div>
+</div>
