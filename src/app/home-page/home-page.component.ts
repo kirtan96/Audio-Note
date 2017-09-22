@@ -3,31 +3,37 @@ import {AuthGuardService} from "../../services/auth-guard.service";
 import {Router} from "@angular/router";
 import $ from "jquery/dist/jquery";
 import {HeaderComponent} from "../../shared/header/header.component";
-import {FileInsertModalComponent} from "../../shared/file-insert-modal/file-insert-modal.component";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import {FirebaseApp} from "angularfire2";
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
+import {FilesListComponent} from "../../shared/files-list/files-list.component";
+import {ANFile} from "../../services/files.service";
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
 })
+
 export class HomePageComponent implements OnInit {
 
   private userId;
   private storage;
   private modal;
   private task;
+  private database;
+  public files: ANFile[];
 
   constructor(private authGuardService: AuthGuardService,
               private router: Router,
               private headerComponent: HeaderComponent,
-              private fileModal: FileInsertModalComponent,
               private modalService: NgbModal,
-              private firebaseApp: FirebaseApp) {
+              private firebaseApp: FirebaseApp,
+              private fileList: FilesListComponent) {
     this.storage = firebaseApp.storage();
+    this.database = firebaseApp.database();
+    this.files = [];
   }
 
   ngOnInit() {
@@ -36,6 +42,26 @@ export class HomePageComponent implements OnInit {
         this.router.navigate(['/login']);
       } else {
         this.userId = a.uid;
+        this.authGuardService.afDB.list('/users/' + a.uid).subscribe(a2 => {
+          this.files = [];
+          a2.forEach( b => {
+            let keys = Object.keys(b);
+            keys.forEach(key => {
+              if (key === "info") {
+                this.headerComponent.updateUsername(b[key].name);
+              }
+              if (b.$key === "files") {
+                let fileDb = b[key];
+                let fileKeys = Object.keys(b[key]);
+                fileKeys.forEach( fileKey => {
+                  let anFile = new ANFile();
+                  anFile.deserialize(fileDb[fileKey]);
+                  this.files.push(anFile);
+                });
+              }
+            });
+          });
+        });
       }
     });
     $('#menuItems li').each(function() {
@@ -45,19 +71,6 @@ export class HomePageComponent implements OnInit {
         });
         $(this).addClass('selected');
       });
-    });
-    this.headerComponent.ngOnInit();
-    this.authGuardService.user.subscribe(a => {
-      if (a) {
-        this.authGuardService.afDB.list('/users/' + a.uid).subscribe(a2 => {
-          let data = a2[0];
-          let keys = Object.keys(data);
-          keys.forEach(key => {
-            this.headerComponent.ngOnInit();
-            this.headerComponent.updateUsername(data[key].name);
-          });
-        });
-      }
     });
   }
 
@@ -110,6 +123,26 @@ export class HomePageComponent implements OnInit {
         $("#percentageDone").text("Uploaded Successfully!");
         $("#uploadButton").hide();
         $("#uploadButton").removeClass("btn-success").addClass("btn-primary");
+        uploader.getDownloadURL().then(a => {
+          let hashed = (+new Date).toString(36);
+          let dbHelper = this.database.ref("/users/" + this.userId + "/files/" + hashed);
+          let fileJson = {
+            id: hashed,
+            name: fileName,
+            filename: file.name,
+            link: a,
+            dateUploaded: new Date().toLocaleString(),
+            modifiedOn: new Date().toLocaleString(),
+            type: "file",
+            bookmark: false,
+            notes: ""
+          };
+          let anFile = new ANFile();
+          anFile.deserialize(fileJson);
+          dbHelper.push(fileJson).then( a => {
+            // this.files.push(anFile);
+          });
+        });
       });
     } else {
       this.task.cancel();
@@ -123,7 +156,13 @@ export class HomePageComponent implements OnInit {
   }
 
   isUnique(file) {
-    return true;
+    let isUnique = true;
+    this.files.forEach(f => {
+      if (f.name === file) {
+        isUnique = false;
+      }
+    });
+    return isUnique;
   }
 
   hideErrors() {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthGuardService} from "../../services/auth-guard.service";
 import $ from 'jquery/dist/jquery';
 import {Router} from "@angular/router";
+import {HeaderComponent} from "../../shared/header/header.component";
 
 @Component({
   selector: 'app-login-page',
@@ -11,7 +12,8 @@ import {Router} from "@angular/router";
 export class LoginPageComponent implements OnInit {
 
   constructor(private authGuardService: AuthGuardService,
-              private router: Router) { }
+              private router: Router,
+              private header: HeaderComponent) { }
 
   reset = false;
   error = false;
@@ -23,6 +25,7 @@ export class LoginPageComponent implements OnInit {
 
 
   ngOnInit() {
+    this.header.ngOnInit();
     $('.text-danger').hide();
     $('#email').on('keydown', function() {
       $('.text-danger').hide();

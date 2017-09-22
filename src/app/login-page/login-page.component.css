@@ -1,5 +1,6 @@
 #loginPage {
   width:100%;
+  margin-top: 50px;
   min-height: 100vh;
   background: linear-gradient(140deg, #6bd8e2 0%, #67e5cb 51%, #51d1c0 75%);
 }
@@ -11,7 +12,7 @@
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   width:400px;
-  background: linear-gradient(0deg, #5ab6bb 0%, #5bb8c0 51%, #56abbb 75%);
+  background: linear-gradient(0deg, #5dc2bb 0%, #5ec7bc 51%, #5dc2bb 75%);
   padding: 45px 50px 30px 50px;
   border-radius: 10px;
 }

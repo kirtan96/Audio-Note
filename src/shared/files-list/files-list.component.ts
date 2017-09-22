@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import $ from "jquery/dist/jquery";
+import {ANFile, FilesService} from "../../services/files.service";
 
 @Component({
   selector: 'app-files-list',
@@ -8,20 +9,21 @@ import $ from "jquery/dist/jquery";
 })
 export class FilesListComponent implements OnInit {
 
-  constructor() { }
+  @Input() files: ANFile[];
+
+  constructor(private fileService: FilesService) {
+    this.files = [];
+  }
 
   ngOnInit() {
     $(".bookmark").each(function() {
-      $(this).on("click", function() {
-        if ($(this).hasClass("fa-star-o")) {
-          $(this).removeClass("fa-star-o");
-          $(this).addClass("fa-star");
-        } else {
-          $(this).removeClass("fa-star");
-          $(this).addClass("fa-star-o");
-        }
-      });
+
     })
+  }
+
+  toggleBookmark(file){
+    file.bookmark = !file.bookmark;
+    this.fileService.updateFile(file);
   }
 
 }

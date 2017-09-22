@@ -16,9 +16,9 @@ import {HttpModule} from "@angular/http";
 import {AuthGuardService} from "../services/auth-guard.service";
 import { HomePageComponent } from './home-page/home-page.component';
 import { FilesListComponent } from '../shared/files-list/files-list.component';
-import { FileInsertModalComponent } from '../shared/file-insert-modal/file-insert-modal.component';
 import {NgbModal, NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
 import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
+import {FilesService} from "../services/files.service";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyBBmvxKIyXz_SnNqKIQljm2kbl1AeZZgrE",
@@ -35,8 +35,7 @@ export const firebaseConfig = {
     LoginPageComponent,
     SignupPageComponent,
     HomePageComponent,
-    FilesListComponent,
-    FileInsertModalComponent
+    FilesListComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +52,7 @@ export const firebaseConfig = {
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
-  providers: [AuthGuardService, HeaderComponent, FileInsertModalComponent, NgbModal, NgbModalStack],
+  providers: [AuthGuardService, FilesService, HeaderComponent, FilesListComponent, NgbModal, NgbModalStack],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

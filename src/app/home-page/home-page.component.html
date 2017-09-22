@@ -22,7 +22,7 @@
       <li><i class="fa fa-star-o"></i> Favorites</li>
     </ul>
   </div>
-  <app-files-list></app-files-list>
+  <app-files-list [files]="files"></app-files-list>
 
   <ng-template #insertFileModal>
     <div class="modal-header">
@@ -34,10 +34,10 @@
         <br>
         <label id="errorNoFile" class="text-danger">Select a file</label>
         <br>
-        <h4>Name of file <span class="text-danger">*</span></h4>
+        <h4>Name of file <span class="text-danger">* </span> (Max Characters: 30)</h4>
         <label id="errorUploadFile" class="text-danger">Enter name of file</label>
         <label id="errorDuplicateFile" class="text-danger">File with this name already exists</label>
-        <input id="fileName" class="form-control" placeholder="Name of file" type="text">
+        <input id="fileName" class="form-control" placeholder="Name of file" maxlength="30" type="text">
         <div class="progress">
           <div id="uploaderProgress" class="progress-bar progress-bar-striped active" role="progressbar"
                aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%; height: 20px;">

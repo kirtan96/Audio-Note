@@ -2,6 +2,7 @@
   /*background: darkcyan;*/
   background: #59b3bb;
   width:100%;
+  position: fixed;
 }
 
 #title {
