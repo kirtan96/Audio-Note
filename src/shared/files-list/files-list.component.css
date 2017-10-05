@@ -24,17 +24,38 @@ li {
 }
 
 .card {
-  padding: 5px;
   border-radius: 5px;
+  border-width: 2px;
   cursor: pointer;
+  height:250px;
 }
 
 .card-block{
   padding: 0px;
+  color: whitesmoke;
+  border-radius: 2px 2px 5px 5px;
+  border-color: transparent;
+}
+
+.cbaudio {
+  background: linear-gradient(180deg, #4296d7 10%, #4394d6 50%, #4690d5 70%);
+}
+
+.cbyoutube {
+  background: #f15a55;
+  background: linear-gradient(180deg, #eb5752 10%, #e65752 50%, #e25752 70%);
+}
+
+.cbrecording {
+  background: linear-gradient(180deg, #e6bd58 10%, #e3bc51 50%, #e2b75b 70%);
 }
 
 .card-title {
   font-weight: 300;
+  padding-top: 25px;
+  word-break: break-word;
+  margin-bottom: 0px;
+  padding-bottom: 10px;
 }
 
 .audio, .recording, .youtube {
@@ -43,25 +64,32 @@ li {
 }
 
 .audio {
-  background: #3a8acf;
-  height:250px;
+  background: linear-gradient(40deg, #3176b1 10%, #3783c5 50%, #3a8acf 70%);
 }
 
 .audio:hover {
-  background: #3d93dc;
+  background: linear-gradient(40deg, #2d6da3 10%, #3073ac 50%, #357fbf 70%);
 }
 
 .recording {
-  background: #f0ad4e;
+  background: linear-gradient(40deg, #d89b46 10%, #e8a84c 50%, #f0ad4e 70%);
+}
+
+.recording:hover {
+  background: linear-gradient(40deg, #d08e3a 10%, #e29a3f 50%, #f0a443 70%);
 }
 
 .youtube {
-  background: #d9534f;
+  background: linear-gradient(40deg, #c34b47 10%, #cc4f4b 50%, #d9534f 70%);
 }
 
-.bookmark, .edit, .trash {
+.youtube:hover {
+  background: linear-gradient(40deg, #ae433f 10%, #b54642 50%, #C34B47 70%);
+}
+
+.bookmark, .edit, .trash, .info {
   font-size: 16pt;
-  margin-right: 30px;
+  margin-right: 20px;
   margin-bottom: 5px;
 }
 
@@ -71,6 +99,23 @@ li {
 
 .cardFooter {
   position: absolute;
-  margin-left: 23px;
-  bottom: 10px;
+  margin-left: 18px;
+  bottom: 5px;
+}
+
+#confirmationText {
+  font-size: 12pt;
+  margin-bottom: 30px;
+}
+
+#deleteButton, #editButton{
+  margin-right: 5px;
+}
+
+h4 {
+  margin: 5px 0px;
+}
+
+#downloadLink {
+  cursor: pointer;
 }

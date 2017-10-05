@@ -10,6 +10,7 @@ export class FilesService {
   userId;
   items: FirebaseListObservable<any[]>;
   database;
+  storage;
 
   constructor(public afAuth: AngularFireAuth,
               public afDB: AngularFireDatabase,
@@ -20,6 +21,7 @@ export class FilesService {
       this.userId = a.uid;
     });
     this.database = firebaseApp.database();
+    this.storage = firebaseApp.storage();
   }
 
   updateFile(file) {
@@ -29,7 +31,21 @@ export class FilesService {
       secretKey = a[keys[0]].$key;
     });
     let db = this.database.ref("/users/" + this.userId + "/files/" + file.id + "/" + secretKey);
-    db.update(file);
+    return db.update(file);
+  }
+
+  removeData(data) {
+    return this.database.ref("/users/" + this.userId + "/files/" + data.id).remove();
+  }
+
+  removeFile(file) {
+    let ref = this.storage.ref();
+    let fileName = file.filename.replace(".mp3", "");
+    return ref.child(this.userId + "/" + fileName).delete();
+  }
+
+  getFile(id) {
+    return this.afDB.list("/users/" + this.userId + "/files/" + id);
   }
 }
 
@@ -37,6 +53,7 @@ export class ANFile {
   public id;
   public link;
   public name;
+  public filename;
   public notes;
   public bookmark;
   public type;
@@ -55,6 +72,7 @@ export class ANFile {
     this.type = json.type;
     this.dateUploaded = json.dateUploaded;
     this.modifiedOn = json.modifiedOn;
+    this.filename = json.filename;
   }
 
 }

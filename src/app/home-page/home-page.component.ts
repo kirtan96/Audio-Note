@@ -23,7 +23,9 @@ export class HomePageComponent implements OnInit {
   private modal;
   private task;
   private database;
+  private selected;
   public files: ANFile[];
+  public filteredFiles: ANFile[];
 
   constructor(private authGuardService: AuthGuardService,
               private router: Router,
@@ -34,6 +36,8 @@ export class HomePageComponent implements OnInit {
     this.storage = firebaseApp.storage();
     this.database = firebaseApp.database();
     this.files = [];
+    this.filteredFiles = [];
+    this.selected = "home";
   }
 
   ngOnInit() {
@@ -44,6 +48,7 @@ export class HomePageComponent implements OnInit {
         this.userId = a.uid;
         this.authGuardService.afDB.list('/users/' + a.uid).subscribe(a2 => {
           this.files = [];
+          this.filteredFiles = [];
           a2.forEach( b => {
             let keys = Object.keys(b);
             keys.forEach(key => {
@@ -57,6 +62,8 @@ export class HomePageComponent implements OnInit {
                   let anFile = new ANFile();
                   anFile.deserialize(fileDb[fileKey]);
                   this.files.push(anFile);
+                  // this.filteredFiles.push(anFile);
+                  this.filter(this.selected);
                 });
               }
             });
@@ -64,6 +71,7 @@ export class HomePageComponent implements OnInit {
         });
       }
     });
+    $("#" + this.selected).addClass("selected");
     $('#menuItems li').each(function() {
       $(this).on('click', function(){
         $('#menuItems li').each(function() {
@@ -173,5 +181,40 @@ export class HomePageComponent implements OnInit {
 
   closeModal() {
     this.modal.close();
+  }
+
+  filter(filter) {
+    if (filter === 'home') {
+      this.filteredFiles = this.files;
+      this.selected = "home";
+    } else if (filter === 'files') {
+      this.selected = "files";
+      this.filteredFiles = this.files.filter(file => {
+        if (file.type === 'file'){
+          return file;
+        }
+      });
+    } else if (filter === 'recordings') {
+      this.selected = "recordings";
+      this.filteredFiles = this.files.filter(file => {
+        if (file.type === 'recording') {
+          return file;
+        }
+      });
+    } else if (filter === 'youtube') {
+      this.selected = "youtube";
+      this.filteredFiles = this.files.filter(file => {
+        if (file.type === 'youtube') {
+          return file;
+        }
+      });
+    } else if (filter === 'favorites') {
+      this.selected = "favorites";
+      this.filteredFiles = this.files.filter(file => {
+        if (file.bookmark) {
+          return file;
+        }
+      });
+    }
   }
 }

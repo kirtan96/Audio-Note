@@ -19,6 +19,7 @@ import { FilesListComponent } from '../shared/files-list/files-list.component';
 import {NgbModal, NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
 import {NgbModalStack} from "@ng-bootstrap/ng-bootstrap/modal/modal-stack";
 import {FilesService} from "../services/files.service";
+import { PlayerComponent } from './player/player.component';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyBBmvxKIyXz_SnNqKIQljm2kbl1AeZZgrE",
@@ -35,7 +36,8 @@ export const firebaseConfig = {
     LoginPageComponent,
     SignupPageComponent,
     HomePageComponent,
-    FilesListComponent
+    FilesListComponent,
+    PlayerComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,8 @@ export const firebaseConfig = {
       { path: '', redirectTo:'/login' ,pathMatch: 'full'},
       { path: 'login', component: LoginPageComponent },
       { path: 'signup', component: SignupPageComponent},
-      { path: 'home', component: HomePageComponent}
+      { path: 'home', component: HomePageComponent},
+      { path: 'player/:id', component: PlayerComponent}
     ]),
     FormsModule,
     HttpModule,

@@ -15,14 +15,14 @@
   </div>
   <div id="menu" class="pull-left">
     <ul id="menuItems" class="list-unstyled text-left">
-      <li class="selected"><i class="fa fa-home"></i> Home</li>
-      <li><i class="fa fa-music"></i> Files</li>
-      <li><i class="fa fa-microphone"></i> Recordings</li>
-      <li><i class="fa fa-youtube"></i> YouTube</li>
-      <li><i class="fa fa-star-o"></i> Favorites</li>
+      <li id="home" class="selected" (click)="filter('home')"><i class="fa fa-home"></i> Home</li>
+      <li id="files" (click)="filter('files')"><i class="fa fa-music"></i> Files</li>
+      <li id="recordings" (click)="filter('recordings')"><i class="fa fa-microphone"></i> Recordings</li>
+      <li id="youtube" (click)="filter('youtube')"><i class="fa fa-youtube"></i> YouTube</li>
+      <li id="favorites" (click)="filter('favorites')"><i class="fa fa-star-o"></i> Favorites</li>
     </ul>
   </div>
-  <app-files-list [files]="files"></app-files-list>
+  <app-files-list [files]="files" [filteredFiles]="filteredFiles"></app-files-list>
 
   <ng-template #insertFileModal>
     <div class="modal-header">

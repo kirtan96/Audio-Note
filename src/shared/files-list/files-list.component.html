@@ -1,46 +1,107 @@
 <div id="fileListView">
   <ul class="list-unstyled">
-    <li *ngFor="let f of files">
-      <div class="card audio">
-        <div class="crop text-center">
+    <li *ngFor="let f of filteredFiles">
+      <div *ngIf="f.type === 'file'" class="card audio">
+        <div class="crop text-center" (click)="goToPlayer(f)">
           <i class="fa fa-music"></i>
         </div>
-        <div class="card-block text-center">
+        <div class="card-block text-center cbaudio">
+          <h3 class="card-title" (click)="goToPlayer(f)">{{f.name}}</h3>
+          <div class="cardFooter">
+            <i *ngIf="f.bookmark" class="fa fa-star bookmark" (click)="toggleBookmark(f)"></i>
+            <i *ngIf="!f.bookmark" class="fa fa-star-o bookmark" (click)="toggleBookmark(f)"></i>
+            <i class="fa fa-info-circle info" (click)="showInfoModal(infoFileModal, f)"></i>
+            <i class="fa fa-pencil edit" (click)="showEditModal(editFileModal, f)"></i>
+            <i class="fa fa-trash-o trash" (click)="showDeleteModal(deleteFileModal, f)"></i>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="f.type === 'recording'" class="card recording">
+        <div class="crop text-center">
+          <i class="fa fa-microphone"></i>
+        </div>
+        <div class="card-block text-center cbrecording">
           <h3 class="card-title">{{f.name}}</h3>
           <div class="cardFooter">
             <i *ngIf="f.bookmark" class="fa fa-star bookmark" (click)="toggleBookmark(f)"></i>
             <i *ngIf="!f.bookmark" class="fa fa-star-o bookmark" (click)="toggleBookmark(f)"></i>
-            <i class="fa fa-pencil edit"></i>
-            <i class="fa fa-trash-o trash"></i>
+            <i class="fa fa-info-circle info" (click)="showInfoModal(infoFileModal, f)"></i>
+            <i class="fa fa-pencil edit" (click)="showEditModal(editFileModal, f)"></i>
+            <i class="fa fa-trash-o trash" (click)="showDeleteModal(deleteFileModal, f)"></i>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="f.type === 'youtube'" class="card youtube">
+        <div class="crop text-center">
+          <i class="fa fa-youtube"></i>
+        </div>
+        <div class="card-block text-center cbyoutube">
+          <h3 class="card-title">{{f.name}}</h3>
+          <div class="cardFooter">
+            <i *ngIf="f.bookmark" class="fa fa-star bookmark" (click)="toggleBookmark(f)"></i>
+            <i *ngIf="!f.bookmark" class="fa fa-star-o bookmark" (click)="toggleBookmark(f)"></i>
+            <i class="fa fa-info-circle info" (click)="showInfoModal(infoFileModal, f)"></i>
+            <i class="fa fa-pencil edit" (click)="showEditModal(editFileModal, f)"></i>
+            <i class="fa fa-trash-o trash" (click)="showDeleteModal(deleteFileModal, f)"></i>
           </div>
         </div>
       </div>
     </li>
-    <!--<li>-->
-      <!--<div class="card recording bg-warning">-->
-        <!--<div class="crop text-center">-->
-          <!--<i class="fa fa-microphone"></i>-->
-        <!--</div>-->
-        <!--<div class="card-block">-->
-          <!--<h3 class="card-title">Swami Aap Rijo Em Raaji</h3>-->
-          <!--<i class="fa fa-star bookmark"></i>-->
-          <!--<i class="fa fa-pencil edit"></i>-->
-          <!--<i class="fa fa-trash-o trash"></i>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</li>-->
-    <!--<li>-->
-      <!--<div class="card youtube bg-danger">-->
-        <!--<div class="crop text-center">-->
-          <!--<i class="fa fa-youtube"></i>-->
-        <!--</div>-->
-        <!--<div class="card-block">-->
-          <!--<h3 class="card-title">Swami Aap Rijo Em Raaji</h3>-->
-          <!--<i class="fa fa-star bookmark"></i>-->
-          <!--<i class="fa fa-pencil edit"></i>-->
-          <!--<i class="fa fa-trash-o trash"></i>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</li>-->
   </ul>
 </div>
+
+<ng-template #deleteFileModal>
+  <div class="modal-header">
+    <h3 class="modal-title">Delete File</h3>
+  </div>
+  <div class="modal-body">
+    <div>
+      <label id="confirmationText"></label>
+      <br>
+      <button class="btn btn-danger pull-right" (click)="closeModal()">Cancel</button>
+      <button id="deleteButton" class="btn btn-warning pull-right">Yes</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #editFileModal>
+  <div class="modal-header">
+    <h3 class="modal-title">Edit File</h3>
+  </div>
+  <div class="modal-body">
+    <div>
+      <h4>Name of file <span class="text-danger">* </span> (Max Characters: 30)</h4>
+      <label id="errorNoFile" class="text-danger">Enter name of file</label>
+      <label id="errorDuplicateFile" class="text-danger">File with this name already exists</label>
+      <input id="fileName" class="form-control" placeholder="Name of file" maxlength="30" type="text">
+      <br>
+      <button class="btn btn-danger pull-right" (click)="closeModal()">Cancel</button>
+      <button id="editButton" class="btn btn-warning pull-right">Edit</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #infoFileModal>
+  <div class="modal-header">
+    <h3 class="modal-title">File Info</h3>
+  </div>
+  <div class="modal-body">
+    <div>
+      <h4>Name of file</h4>
+      <label id="nameOfFile"></label>
+      <br>
+      <h4>Uploaded on</h4>
+      <label id="uploadedOn"></label>
+      <br>
+      <h4>Modified on</h4>
+      <label id="modifiedOn"></label>
+      <br>
+      <h4>Number of notes</h4>
+      <label id="numberOfNotes"></label>
+      <br>
+      <!--<h4 class="text-primary"><a id="downloadLink">Download Audio File</a></h4>-->
+      <!--<br>-->
+      <button class="btn btn-danger pull-right" (click)="closeModal()">Close</button>
+    </div>
+  </div>
+</ng-template>
