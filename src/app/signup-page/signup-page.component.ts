@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthGuardService} from "../../services/auth-guard.service";
 import {Router} from "@angular/router";
-import $ from "jquery/dist/jquery";
 
 @Component({
   selector: 'app-signup-page',
@@ -34,10 +33,10 @@ export class SignupPageComponent implements OnInit {
   }
 
   signup() {
-    const userName = $("#name").val().trim();
-    const email = $("#email").val().trim();
-    const password = $("#pwd").val().trim();
-    const confirmPwd = $("#confirmPwd").val().trim();
+    const userName = $("#name").val().toString().trim();
+    const email = $("#email").val().toString().trim();
+    const password = $("#pwd").val().toString().trim();
+    const confirmPwd = $("#confirmPwd").val().toString().trim();
     if (userName.length < 1) {
       $('#emptyName').show();
       return;

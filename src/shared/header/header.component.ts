@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthGuardService} from "../../services/auth-guard.service";
-import $ from "jquery/dist/jquery";
 
 @Component({
   selector: 'app-header',

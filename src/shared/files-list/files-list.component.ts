@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import $ from "jquery/dist/jquery";
 import {ANFile, FilesService} from "../../services/files.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Router} from "@angular/router";
@@ -66,7 +65,7 @@ export class FilesListComponent implements OnInit {
     $("#editButton").on("click", function() {
       $("#errorDuplicateFile").hide();
       $("#errorNoFile").hide();
-      let filename = $("#fileName").val().trim();
+      let filename = $("#fileName").val().toString().trim();
       if (filename === file.name) {
         self.editModal.close();
         return;

@@ -1,7 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {AuthGuardService} from "../../services/auth-guard.service";
 import {Router} from "@angular/router";
-import $ from "jquery/dist/jquery";
 import {HeaderComponent} from "../../shared/header/header.component";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import {FirebaseApp} from "angularfire2";
@@ -90,18 +89,22 @@ export class HomePageComponent implements OnInit {
 
   inputName() {
     this.hideErrors();
-    $("#fileName").val($('input[type=file]')[0].files[0].name.replace(".mp3", ""));
+    let name = ($('input[type=file]')[0] as HTMLInputElement).files[0].name.replace(".mp3", "");
+    if (name.length > 30) {
+      name = name.substring(0, 30);
+    }
+    $("#fileName").val(name);
   }
 
   upload() {
     if ($("#uploadButton").text() === "Upload") {
       this.hideErrors();
-      if (!$("input[type=file]")[0].files[0]) {
+      if (!($("input[type=file]")[0] as HTMLInputElement).files[0]) {
         $("#errorNoFile").show();
         return;
       }
-      let file = $("input[type=file]")[0].files[0];
-      let fileName = $("#fileName").val().trim();
+      let file = ($('input[type=file]')[0] as HTMLInputElement).files[0];
+      let fileName = $("#fileName").val().toString().trim();
       if (fileName.length < 1) {
         $("#errorUploadFile").show();
         return;

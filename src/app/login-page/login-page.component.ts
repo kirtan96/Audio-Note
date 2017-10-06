@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthGuardService} from "../../services/auth-guard.service";
-import $ from 'jquery/dist/jquery';
 import {Router} from "@angular/router";
 import {HeaderComponent} from "../../shared/header/header.component";
 
@@ -43,8 +42,8 @@ export class LoginPageComponent implements OnInit {
 
   login() {
     $('.text-danger').hide();
-    let email = $("#email").val().trim();
-    let password = $("#pwd").val().trim();
+    let email = $("#email").val().toString().trim();
+    let password = $("#pwd").val().toString().trim();
     if (email.length < 1) {
       this.emptyEmail = true;
       return;
@@ -79,7 +78,7 @@ export class LoginPageComponent implements OnInit {
 
   sendRecoveryEmail() {
     $('.alert').hide();
-    let email = $('#email').val().trim();
+    let email = $('#email').val().toString().trim();
     if (email.length < 1) {
       this.emptyEmail = true;
       return;
