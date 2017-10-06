@@ -118,4 +118,11 @@ h4 {
 
 #downloadLink {
   cursor: pointer;
+  color: white;
+  text-decoration: none;
+}
+
+.fa-download {
+  font-size: 12pt;
+  margin: 0px 5px 0px 0px;
 }

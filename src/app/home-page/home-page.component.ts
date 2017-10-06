@@ -113,7 +113,7 @@ export class HomePageComponent implements OnInit {
         $("#errorDuplicateFile").show();
         return;
       }
-      let uploader = this.storage.ref(this.userId + "/" + fileName);
+      let uploader = this.storage.ref(this.userId + "/" + file.name);
       this.task = uploader.put(file);
       this.task.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
         $("#fileUpload").prop("disabled", true);
@@ -146,7 +146,7 @@ export class HomePageComponent implements OnInit {
             modifiedOn: new Date().toLocaleString(),
             type: "file",
             bookmark: false,
-            notes: ""
+            notes: ['01:01: Hello', '02:02: world']
           };
           let anFile = new ANFile();
           anFile.deserialize(fileJson);

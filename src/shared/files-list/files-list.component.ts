@@ -91,8 +91,8 @@ export class FilesListComponent implements OnInit {
     $("#nameOfFile").text(file.name);
     $("#uploadedOn").text(file.dateUploaded);
     $("#modifiedOn").text(file.modifiedOn);
-    $("#numberOfNotes").text(file.notes.split("|||").length - 1);
-    // $("#downloadLink").attr("href", file.link).attr("download", file.filename);
+    $("#numberOfNotes").text(file.notes.length);
+    $("#downloadLink").attr("href", file.link).attr("download", file.filename);
   }
 
   isUnique(filename) {
