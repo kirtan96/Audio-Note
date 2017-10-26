@@ -1,0 +1,26 @@
+<div id="playerPage">
+  <div id="titleHeader">
+    <button id="backButton" class="btn btn-danger pull-left" (click)="goBack()">
+      <i class="fa fa-arrow-circle-left"></i> Back</button>
+    <h3 id="fileName"></h3>
+  </div>
+  <div id="player">
+    <audio id="audioPlayer" controls></audio>
+  </div>
+  <div *ngIf="file" id="notesList">
+    <ul class="list-unstyled">
+      <li id="note" *ngFor="let note of file.notes">
+        <div id="noteCompartment" (click)="playFrom(note.time)">
+          <label class="time" (click)="playFrom(note.time)">
+            {{note.time}}
+          </label>
+          <label class="note" (click)="playFrom(note.time)">
+            {{note.note}}
+          </label>
+          <button class="btn btn-danger actions pull-right" (click)="deleteNote(note)">Delete</button>
+          <button class="btn btn-warning actions pull-right" (click)="editNote(note)">Edit</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

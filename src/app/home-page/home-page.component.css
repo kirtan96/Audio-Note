@@ -77,10 +77,10 @@ h4 {
   margin: 5px 0px;
 }
 
-#percentageDone {
+.percentageDone {
   font-size: 11pt;
 }
 
-#uploadButton {
+.uploadButton {
   margin-right: 5px;
 }

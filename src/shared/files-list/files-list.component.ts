@@ -33,18 +33,26 @@ export class FilesListComponent implements OnInit {
 
   removeFile(file) {
     this.fileService.removeData(file).then(a => {
-      this.fileService.removeFile(file).then(b => {
-        let index = this.files.indexOf(file);
-        if (index > -1) {
-          this.files.splice(index, 1);
-        }
-        index = this.filteredFiles.indexOf(file);
-        if (index > -1) {
-          this.filteredFiles.splice(index, 1);
-        }
-        this.deleteModal.close();
-      });
+      if (file.type !== "youtube") {
+        this.fileService.removeFile(file).then(b => {
+          this.delete(file);
+        });
+      } else {
+        this.delete(file);
+      }
     });
+  }
+
+  delete(file) {
+    let index = this.files.indexOf(file);
+    if (index > -1) {
+      this.files.splice(index, 1);
+    }
+    index = this.filteredFiles.indexOf(file);
+    if (index > -1) {
+      this.filteredFiles.splice(index, 1);
+    }
+    this.deleteModal.close();
   }
 
   showDeleteModal(modal, file) {
@@ -92,7 +100,11 @@ export class FilesListComponent implements OnInit {
     $("#uploadedOn").text(file.dateUploaded);
     $("#modifiedOn").text(file.modifiedOn);
     $("#numberOfNotes").text(file.notes.length);
-    $("#downloadLink").attr("href", file.link).attr("download", file.filename);
+    $("#downloadButton").hide();
+    if (file.type !== "youtube") {
+      $("#downloadButton").show();
+      $("#downloadLink").show().attr("href", file.link).attr("download", file.filename);
+    }
   }
 
   isUnique(filename) {

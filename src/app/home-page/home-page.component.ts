@@ -97,20 +97,20 @@ export class HomePageComponent implements OnInit {
   }
 
   upload() {
-    if ($("#uploadButton").text() === "Upload") {
+    if ($(".uploadButton").text() === "Upload") {
       this.hideErrors();
       if (!($("input[type=file]")[0] as HTMLInputElement).files[0]) {
-        $("#errorNoFile").show();
+        $(".errorNoFile").show();
         return;
       }
       let file = ($('input[type=file]')[0] as HTMLInputElement).files[0];
       let fileName = $("#fileName").val().toString().trim();
       if (fileName.length < 1) {
-        $("#errorUploadFile").show();
+        $(".errorUploadFile").show();
         return;
       }
       if (!this.isUnique(fileName)) {
-        $("#errorDuplicateFile").show();
+        $(".errorDuplicateFile").show();
         return;
       }
       let uploader = this.storage.ref(this.userId + "/" + file.name);
@@ -118,9 +118,9 @@ export class HomePageComponent implements OnInit {
       this.task.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
         $("#fileUpload").prop("disabled", true);
         $("#fileName").prop("disabled", true);
-        $("#uploadButton").text("Cancel").removeClass("btn-success").addClass("btn-warning");
+        $(".uploadButton").text("Cancel").removeClass("btn-success").addClass("btn-warning");
         $(".progress").show();
-        $("#uploaderProgress").css("width", ((snapshot.bytesTransferred / snapshot.totalBytes) * 100) + "%").
+        $(".uploaderProgress").css("width", ((snapshot.bytesTransferred / snapshot.totalBytes) * 100) + "%").
         removeClass("bg-danger")
         $("#percentageDone").text(Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100) + "%");
       },
@@ -130,10 +130,10 @@ export class HomePageComponent implements OnInit {
       },
       () => {
         // upload success
-        $("#uploaderProgress").addClass("bg-success");
+        $(".uploaderProgress").addClass("bg-success");
         $("#percentageDone").text("Uploaded Successfully!");
-        $("#uploadButton").hide();
-        $("#uploadButton").removeClass("btn-success").addClass("btn-primary");
+        $(".uploadButton").hide();
+        $(".uploadButton").removeClass("btn-success").addClass("btn-primary");
         uploader.getDownloadURL().then(a => {
           let hashed = (+new Date).toString(36);
           let dbHelper = this.database.ref("/users/" + this.userId + "/files/" + hashed);
@@ -146,7 +146,14 @@ export class HomePageComponent implements OnInit {
             modifiedOn: new Date().toLocaleString(),
             type: "file",
             bookmark: false,
-            notes: ['01:01: Hello', '02:02: world']
+            notes: [{
+                time: '01:01',
+                note: 'Hello'
+              },
+              {
+                time: '02:02',
+                note: 'world'
+              }]
           };
           let anFile = new ANFile();
           anFile.deserialize(fileJson);
@@ -159,9 +166,9 @@ export class HomePageComponent implements OnInit {
       this.task.cancel();
       $("#fileUpload").prop("disabled", false);
       $("#fileName").prop("disabled", false);
-      $("#uploadButton").text("Upload").removeClass("btn-warning").addClass("btn-success");
+      $(".uploadButton").text("Upload").removeClass("btn-warning").addClass("btn-success");
       $(".progress").show();
-      $("#uploaderProgress").css("width", "100%").addClass("bg-danger");
+      $(".uploaderProgress").css("width", "100%").addClass("bg-danger");
       $("#percentageDone").text("Upload Canceled!");
     }
   }
@@ -177,9 +184,11 @@ export class HomePageComponent implements OnInit {
   }
 
   hideErrors() {
-    $("#errorUploadFile").hide();
-    $("#errorDuplicateFile").hide();
-    $("#errorNoFile").hide();
+    $(".errorUploadFile").hide();
+    $(".errorDuplicateFile").hide();
+    $(".errorNoFile").hide();
+    $(".errorYTLink").hide();
+    $(".invalidYTLink").hide();
   }
 
   closeModal() {
@@ -218,6 +227,68 @@ export class HomePageComponent implements OnInit {
           return file;
         }
       });
+    }
+  }
+
+  uploadYT() {
+    if ($(".uploadButton").text() === "Upload") {
+      this.hideErrors();
+      let fileName = $("#ytFileName").val().toString().trim();
+      let ytLink = $("#ytLink").val().toString().trim();
+      if (ytLink.length < 1) {
+        $(".errorYTLink").show();
+        return;
+      }
+      if (!this.isValidYoutubeLink(ytLink)) {
+        $(".invalidYTLink").show();
+        return;
+      }
+      if (fileName.length < 1) {
+        $(".errorUploadFile").show();
+        return;
+      }
+      if (!this.isUnique(fileName)) {
+        $(".errorDuplicateFile").show();
+        return;
+      }
+      let hashed = (+new Date).toString(36);
+      let dbHelper = this.database.ref("/users/" + this.userId + "/files/" + hashed);
+      let fileJson = {
+        id: hashed,
+        name: fileName,
+        filename: fileName,
+        link: ytLink,
+        dateUploaded: new Date().toLocaleString(),
+        modifiedOn: new Date().toLocaleString(),
+        type: "youtube",
+        bookmark: false,
+        notes: [
+          {
+          time: '01:01',
+          note: 'Hello'
+          },
+          {
+            time: '02:02',
+            note: 'world'
+          }
+        ]
+      };
+      let anFile = new ANFile();
+      anFile.deserialize(fileJson);
+      dbHelper.push(fileJson).then( a => {
+        // this.files.push(anFile);
+        this.modal.close();
+      });
+    }
+  }
+
+  isValidYoutubeLink(ytLink) {
+    var p = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+    if(ytLink.match(p)) {
+      return true;
+    }
+    else {
+      return false;
     }
   }
 }
