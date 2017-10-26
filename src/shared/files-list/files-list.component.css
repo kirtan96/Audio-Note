@@ -28,6 +28,7 @@ li {
   border-width: 2px;
   cursor: pointer;
   height:250px;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.29);
 }
 
 .card-block{
