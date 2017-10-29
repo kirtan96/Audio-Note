@@ -32,11 +32,11 @@
         </div>
       </div>
       <div *ngIf="f.type === 'youtube'" class="card youtube">
-        <div class="crop text-center">
+        <div class="crop text-center" (click)="goToPlayer(f)">
           <i class="fa fa-youtube"></i>
         </div>
         <div class="card-block text-center cbyoutube">
-          <h3 class="card-title">{{f.name}}</h3>
+          <h3 class="card-title" (click)="goToPlayer(f)">{{f.name}}</h3>
           <div class="cardFooter">
             <i *ngIf="f.bookmark" class="fa fa-star bookmark" (click)="toggleBookmark(f)"></i>
             <i *ngIf="!f.bookmark" class="fa fa-star-o bookmark" (click)="toggleBookmark(f)"></i>

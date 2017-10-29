@@ -4,8 +4,11 @@
       <i class="fa fa-arrow-circle-left"></i> Back</button>
     <h3 id="fileName"></h3>
   </div>
-  <div id="player">
+  <div *ngIf="file && file.type !== 'youtube'" id="player">
     <audio id="audioPlayer" controls></audio>
+  </div>
+  <div id="ytPlayer">
+
   </div>
   <div *ngIf="file" id="notesList">
     <ul class="list-unstyled">

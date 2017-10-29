@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "^4.2.4",
     "@angular/router": "^4.2.4",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-beta.5",
+    "@types/youtube": "0.0.31",
     "angular-font-awesome": "^2.0.3",
     "angularfire2": "^4.0.0-rc0",
     "bootstrap": "^4.0.0-alpha.6",
@@ -33,6 +34,8 @@
     "npm": "^5.4.2",
     "rxjs": "^5.4.2",
     "semantic-ui-css": "^2.2.12",
+    "youtube": "^0.1.0",
+    "youtube-player": "^5.4.0",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {
