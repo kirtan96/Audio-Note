@@ -99,7 +99,7 @@ export class FilesListComponent implements OnInit {
     $("#nameOfFile").text(file.name);
     $("#uploadedOn").text(file.dateUploaded);
     $("#modifiedOn").text(file.modifiedOn);
-    $("#numberOfNotes").text(file.notes.length);
+    $("#numberOfNotes").text(file.notes ? file.notes.length : 0);
     $("#downloadButton").hide();
     if (file.type !== "youtube") {
       $("#downloadButton").show();

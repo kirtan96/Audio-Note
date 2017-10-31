@@ -4,8 +4,8 @@
       <i class="fa fa-arrow-circle-left"></i> Back</button>
     <h3 id="fileName"></h3>
   </div>
-  <div *ngIf="file && file.type !== 'youtube'" id="player">
-    <audio id="audioPlayer" controls></audio>
+  <div id="player">
+    <audio id="audioPlayer" controls autoplay></audio>
   </div>
   <div id="ytPlayer">
 
@@ -20,10 +20,39 @@
           <label class="note" (click)="playFrom(note.time)">
             {{note.note}}
           </label>
-          <button class="btn btn-danger actions pull-right" (click)="deleteNote(note)">Delete</button>
-          <button class="btn btn-warning actions pull-right" (click)="editNote(note)">Edit</button>
+          <button class="btn btn-danger actions pull-right" (click)="deleteNote(deleteNoteModal, note)">Delete</button>
+          <button class="btn btn-warning actions pull-right" (click)="editNote(editNoteModal, note)">Edit</button>
         </div>
       </li>
     </ul>
   </div>
 </div>
+
+<ng-template #editNoteModal>
+  <div class="modal-header">
+    <h3 class="modal-title">Edit Note</h3>
+  </div>
+  <div class="modal-body">
+    <div>
+      <textarea id="noteView" class="form-control" rows="5"></textarea>
+      <br>
+      <button class="closeButton btn btn-danger pull-right" (click)="closeModal()">Close</button>
+      <button id="editButton" class="uploadButton btn btn-success pull-right">Edit</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deleteNoteModal>
+  <div class="modal-header">
+    <h3 class="modal-title">Delete Note</h3>
+  </div>
+  <div class="modal-body">
+    <div>
+      <label id="confirmationText"></label>
+      <br>
+      <button class="btn btn-danger pull-right" (click)="closeModal()">Cancel</button>
+      <button id="deleteButton" class="btn btn-warning pull-right">Yes</button>
+    </div>
+  </div>
+</ng-template>
+
