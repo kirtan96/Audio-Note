@@ -10,7 +10,7 @@
   <div id="ytPlayer">
 
   </div>
-  <div *ngIf="file" id="notesList">
+  <div *ngIf="file" id="notesList" ngClass="{{file.type}}">
     <ul class="list-unstyled">
       <li id="note" *ngFor="let note of file.notes">
         <div id="noteCompartment" (click)="playFrom(note.time)">
@@ -26,6 +26,11 @@
       </li>
     </ul>
   </div>
+  <div id="noteTakingModal">
+    <label id="currentTime" class="label primary"></label>
+    <textarea id="noteTakingArea" class="form-control" rows="2" (keyup)="checkInput()"></textarea>
+    <button id="addNote" class="btn btn-success">Add</button>
+  </div>
 </div>
 
 <ng-template #editNoteModal>
@@ -34,7 +39,7 @@
   </div>
   <div class="modal-body">
     <div>
-      <textarea id="noteView" class="form-control" rows="5"></textarea>
+      <textarea id="noteView" class="form-control" rows="4"></textarea>
       <br>
       <button class="closeButton btn btn-danger pull-right" (click)="closeModal()">Close</button>
       <button id="editButton" class="uploadButton btn btn-success pull-right">Edit</button>

@@ -1,4 +1,3 @@
-///<reference path="../../../node_modules/@types/youtube/index.d.ts"/>
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {ANFile, FilesService} from "../../services/files.service";
@@ -37,12 +36,30 @@ export class PlayerComponent implements OnInit {
           this.authGuardService.afDB.list('/users/' + a.uid + "/files/" + params.id).subscribe(a2 => {
             this.file = new ANFile();
             this.file.deserialize(a2[0]);
+            if (!this.file.notes) {
+              this.file.notes = [];
+            }
             if (this.file.type === 'youtube') {
               $("#player").hide();
               this.getYTReady(this.file.link);
             } else {
               $("#audioPlayer").attr("src", this.file.link);
               this.audio = $("#audioPlayer")[0];
+              let self = this;
+              $("#addNote").on("click", function() {
+                let text = $("#noteTakingArea").val().toString().trim();
+                if (text.length > 0) {
+                  self.file.notes.push({
+                    time: $("#currentTime").text(),
+                    note: text
+                  });
+                  self.sortNotes();
+                  self.fileService.updateFile(self.file);
+                  $("#noteTakingArea").val("");
+                  $("#currentTime").text("");
+                  self.resume();
+                }
+              });
             }
             $("#fileName").text(this.file.name);
           });
@@ -140,6 +157,68 @@ export class PlayerComponent implements OnInit {
       video_id = video_id.substring(0, ampersandPosition);
     }
     this.player.loadVideoById(video_id);
+    let self = this;
+    $("#addNote").on("click", function() {
+      let text = $("#noteTakingArea").val().toString().trim();
+      if (text.length > 0) {
+        self.file.notes.push({
+          time: $("#currentTime").text(),
+          note: text
+        });
+        self.sortNotes();
+        self.fileService.updateFile(self.file);
+        $("#noteTakingArea").val("");
+        $("#currentTime").text("");
+      }
+      self.resume();
+    });
+  }
+
+  sortNotes() {
+    let self = this;
+    this.file.notes.sort(function(a, b) {
+      if (a && b) {
+        return (self.timeToNumber(a.time) - self.timeToNumber(b.time))
+      } else {
+        return 0;
+      }
+    })
+  }
+
+  timeToNumber(time) {
+    let minutes = Number.parseInt(time.split(":")[0]) * 60;
+    let seconds = Number.parseInt(time.split(":")[1]);
+    return minutes + seconds;
+  }
+
+  checkInput() {
+    let self = this;
+    let text = $("#noteTakingArea").val().toString().trim();
+    if (text.length > 0) {
+      if (self.player) {
+        self.pause();
+        self.player.getCurrentTime().then(x => {
+          x = self.secondsToMinutes(Math.floor(x));
+          $("#currentTime").text(x);
+        });
+      } else if (self.audio) {
+        self.pause();
+        this.timeLeftOff = self.audio.currentTime;
+        let x = self.secondsToMinutes(Math.floor(self.audio.currentTime));
+        $("#currentTime").text(x);
+      }
+    } else {
+      if (self.player) {
+        self.resume();
+      } else if (self.audio) {
+        self.resume();
+      }
+      $("#currentTime").text("");
+    }
+  }
+
+  secondsToMinutes(time) {
+    return Math.floor(time/60) + ":" + ("0" + (time%60)).slice(-2);
   }
 
   closeModal(){

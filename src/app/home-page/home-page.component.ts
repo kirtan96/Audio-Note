@@ -146,14 +146,7 @@ export class HomePageComponent implements OnInit {
             modifiedOn: new Date().toLocaleString(),
             type: "file",
             bookmark: false,
-            notes: [{
-                time: '01:01',
-                note: 'Hello'
-              },
-              {
-                time: '02:02',
-                note: 'world'
-              }]
+            notes: []
           };
           let anFile = new ANFile();
           anFile.deserialize(fileJson);
@@ -262,16 +255,7 @@ export class HomePageComponent implements OnInit {
         modifiedOn: new Date().toLocaleString(),
         type: "youtube",
         bookmark: false,
-        notes: [
-          {
-          time: '01:01',
-          note: 'Hello'
-          },
-          {
-            time: '02:02',
-            note: 'world'
-          }
-        ]
+        notes: []
       };
       let anFile = new ANFile();
       anFile.deserialize(fileJson);
